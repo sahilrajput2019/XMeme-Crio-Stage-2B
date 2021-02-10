@@ -1,6 +1,7 @@
 const express = require("express");
 const mongoose = require("mongoose"); //using mongoose 
 const http = require("http");
+const bodyParser =  require("body-parser");
 const cors = require("cors");  //for cross origin resource sharing
 
 //configuring dotenv file
@@ -10,7 +11,11 @@ require("dotenv").config();
 const app = express();
 const server = http.createServer(app);
 
-//using cors 
+//use of body parser for Parsing the input requests data
+app.use(bodyParser.urlencoded({extended:true}));
+app.use(bodyParser.json())
+
+//using cross origin resource sharing 
 app.use(cors());
 
 //configuring database conncetion
@@ -26,9 +31,10 @@ connection.once("open", () => {
   console.log("Database Connection establsihed Successfully");
 });
 
+//requrering Router 
 const router = require("./Router");
 app.use(router);
 
-server.listen(process.env.PORT || 5000, () =>
+server.listen(process.env.PORT || 8081, () =>
   console.log("Server is Up and Runnig")
 );
