@@ -35,6 +35,7 @@ connection.once("open", () => {
 const router = require("./Router");
 app.use(router);
 
-server.listen(process.env.PORT || 8081, () =>
-  console.log("Server is Up and Runnig")
+const PORT = process.env.PORT || 8081;
+server.listen(PORT, () =>
+  console.log(`Server is Up and Runnig ${PORT}`)
 );

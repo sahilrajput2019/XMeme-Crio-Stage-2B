@@ -21,6 +21,7 @@ router.get("/memes/:id", (req, res) => {
 //Posting a new meme
 router.post("/memes", (req, res) => {
   try {
+    //Check if it already exists
     Memes.findOne({ ...req.body }).exec((err, meme) => {
       if (meme) {
         res.status(409).json();

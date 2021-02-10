@@ -1,5 +1,6 @@
 import React from "react";
 import { BrowserRouter as Router, Route, Switch } from "react-router-dom";
+import 'react-toastify/dist/ReactToastify.css';
 
 import LandingPage from "./Components/LandingPage/LandingPage";
 import PageNotFound from "./Components/PageNotFound/PageNotFound";
