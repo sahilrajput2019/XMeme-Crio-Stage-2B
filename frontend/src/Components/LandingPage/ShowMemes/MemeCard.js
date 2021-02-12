@@ -1,27 +1,42 @@
 // import axios from "axios";
 import axios from "axios";
-import React from "react";
+import React, { useState } from "react";
 
 import "./MemeCard.css";
 
-const MemeCard = ({ id, name, caption, url, onChange }) => {
-  // const handleChange = (text) => (e) => {
-  //   onChange();
-  // };
-  const handleDelete = (e) => {
-    e.preventDefault();
-    console.log(id);
-    const endpoint = "http:localhost:8081/memes/" + id;
-    console.log("Endpoint" + endpoint);
-    axios.delete(endpoint).catch((err) => console.log(err));
+const MemeCard = ({ id, name, caption, url, memes, setMemes }) => {
+  
+  // const [newCaption, setNewCaption] = useState(caption);
+  // const [newUrl, setNewUrl] = useState(url);
+
+  const handleDelete = (id) => {
+    axios
+      .delete("http://localhost:8081/memes/" + id)
+      .catch((err) => console.log(err));
+
+    const newMemes = memes.filter((m) => m.id !== id);
+    setMemes(newMemes);
   };
-  // const handleEdit = (e) => {
-  //   e.preventDefault();
-  //   console.log("id = " + id);
-  //   const endpoint = "http://localhost:8081/memes/" + { id };
-  //   console.log(endpoint);
-  //   axios.patch(endpoint).catch((err) => console.log(err));
+
+  // const handleEdit = (id) => {
+  //   const updateMeme = {
+  //       caption : newCaption,
+  //       url : newUrl
+  //   };
+  //   console.log(updateMeme);
+  //   axios.patch("http://localhost:8081/memes/" + id, updateMeme)
+  //   .catch((err) => console.log(err));
+
+  //   const newMeme = {
+  //     id : id,
+  //     name : name, 
+  //     url : newUrl,
+  //     caption : newCaption
+  //   };
+  //   setMemes([...memes, newMeme]);
+
   // };
+
   return (
     <div>
       <div className="card " style={{ width: "15rem", height: "22rem" }}>
@@ -36,30 +51,26 @@ const MemeCard = ({ id, name, caption, url, onChange }) => {
           <p className="card-text">{caption}</p>
         </div>
         <div>
-          <button type="submit" className="btn btn-info btn-sm">
+          <button
+            type="button"
+            className="btn btn-info btn-sm"
+            data-toggle="modal"
+            data-target="#Modal"
+          >
             Edit
           </button>
           <button
-            type="submit"
+            type="button"
             className="btn btn-danger btn-sm"
-            onClick={handleDelete}
+            onClick={() => handleDelete(id)}
           >
             Delete
           </button>
         </div>
       </div>
-
-      {/* <button
-        type="button"
-        className="btn btn-primary"
-        data-toggle="modal"
-        data-target="#exampleModalCenter"
-      >
-        Launch demo modal
-      </button>
-      <div
+      {/* <div
         className="modal fade"
-        id="exampleModalCenter"
+        id="Modal"
         tabIndex={-1}
         role="dialog"
         aria-labelledby="exampleModalCenterTitle"
@@ -91,7 +102,7 @@ const MemeCard = ({ id, name, caption, url, onChange }) => {
                     id="caption-change"
                     className="form-control"
                     value={caption}
-                    onChange={handleChange("caption")}
+                    onChange={(e) => setNewCaption(e.target.value)}
                   />
                 </div>
                 <div class="form-group">
@@ -103,7 +114,7 @@ const MemeCard = ({ id, name, caption, url, onChange }) => {
                     id="url-change"
                     className="form-control"
                     value={url}
-                    onChange={handleChange("url")}
+                    onChange={(e) => setNewUrl(e.target.value)}
                   />
                 </div>
               </form>
@@ -116,7 +127,7 @@ const MemeCard = ({ id, name, caption, url, onChange }) => {
               >
                 Close
               </button>
-              <button type="button" className="btn btn-primary">
+              <button type="button" className="btn btn-primary" onClick={handleEdit(id)}>
                 Save changes
               </button>
             </div>
