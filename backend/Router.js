@@ -28,7 +28,17 @@ router.get("/memes", (req, res) => {
 //To send a particular meme based on the id sent in the params and returning that as an object
 router.get("/memes/:id", (req, res) => {
   Memes.findById(req.params.id)
-    .then((meme) => res.status(200).json(meme))
+    .then((meme) => {
+      //As here also to match the response needed with specifier feilds
+      //here modified the name of feilds in the object and returned this as an response object
+      const newMeme = {
+        id: meme._id,
+        name: meme.name,
+        url: meme.url,
+        caption: meme.caption,
+      };
+      res.status(200).json(newMeme);
+    })
     .catch((err) => res.status(404).json({ message: err }));
 });
 
@@ -68,7 +78,7 @@ router.patch("/memes/:id", (req, res) => {
 //for development purpose only
 router.delete("/memes/:id", (req, res) => {
   Memes.findByIdAndDelete(req.params.id)
-    .then(() => res.status(200).json("Deleted"))
+    .then(() => res.status(200).json())
     .catch((err) => res.status(400).json({ message: err }));
 });
 
