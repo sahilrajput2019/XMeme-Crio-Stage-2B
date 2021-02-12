@@ -21,3 +21,8 @@
   float: right;
   margin-right: 30px;
 }
+
+.left{
+  float: left;
+  margin-left: 30px;
+}

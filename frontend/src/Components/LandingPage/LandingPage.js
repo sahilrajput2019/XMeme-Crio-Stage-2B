@@ -29,6 +29,7 @@ const LandingPage = () => {
         <div>
           <p className="heading">
             <strong>
+              <span className="heading left">{date}</span>
               Meme Stream
               <span className="heading date">
                 <button
