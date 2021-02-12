@@ -1,0 +1,14 @@
+
+.card{
+    margin-left: 40px;
+    margin-top: 25px;
+}
+
+.card-title, .card-text{
+    color: brown;
+}
+.btn-sm{
+    margin-left: 20px;
+    margin-bottom: 13px;
+    width : 5rem
+}

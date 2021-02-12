@@ -1,0 +1,16 @@
+.InputForm {
+  align-items: center;
+  margin-left: 25%;
+  width: 50%;
+}
+
+@media (min-width: 320px) and (max-width: 480px) {
+  .InputForm {
+    margin-left: 5%;
+    width: 90%;
+  }
+
+  .BUTTON{
+      width: 50%;
+  }
+}

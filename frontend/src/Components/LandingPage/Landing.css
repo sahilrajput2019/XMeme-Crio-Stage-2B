@@ -1,0 +1,23 @@
+.html{
+    font-family: 'Roboto', sans-serif;
+}
+
+
+#root {
+    height: 100vh;
+  }
+  
+  * {
+    box-sizing: border-box;
+  }
+
+.heading{
+    text-align: center;
+    font-weight: 500;
+    font-size: 30px;
+}
+
+.date{
+  float: right;
+  margin-right: 30px;
+}

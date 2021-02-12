@@ -62,7 +62,7 @@ const InputForm = () => {
   };
 
   return (
-    <div>
+    <div className="InputForm">
       <ToastContainer />
       <form noValidate onSubmit={handleSubmit}>
         <div className="form-group">
@@ -98,7 +98,7 @@ const InputForm = () => {
             placeholder="Enter Url of Meme here"
           />
         </div>
-        <button type="submit">Submit</button>
+        <button type="submit" className="btn btn-secondary BUTTON">Submit</button>
       </form>
     </div>
   );
