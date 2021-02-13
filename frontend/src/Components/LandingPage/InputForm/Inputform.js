@@ -37,6 +37,9 @@ const InputForm = () => {
               url: "",
             });
             toast.success("Posted Successfully");
+            if (res.status === 200) {
+              window.location.reload();
+            }
           })
           .catch((err) => {
             setFormData({
@@ -52,7 +55,7 @@ const InputForm = () => {
           ...formData,
           name,
           caption,
-          url : ""
+          url: "",
         });
         toast.error("Please enter valid image link");
       }
@@ -98,7 +101,9 @@ const InputForm = () => {
             placeholder="Enter Url of Meme here"
           />
         </div>
-        <button type="submit" className="btn btn-secondary BUTTON">Submit</button>
+        <button type="submit" className="btn btn-secondary BUTTON">
+          Submit
+        </button>
       </form>
     </div>
   );

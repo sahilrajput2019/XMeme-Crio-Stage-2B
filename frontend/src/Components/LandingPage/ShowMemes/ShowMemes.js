@@ -12,7 +12,7 @@ const ShowMemes = () => {
       .get("http://localhost:8081/memes")
       .then((response) => setMemes(response.data))
       .catch((error) => setError(error));
-  }, [memes]);
+  }, []);
 
   if (error) {
     return <div className="loader"></div>;

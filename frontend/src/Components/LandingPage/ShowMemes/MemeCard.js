@@ -1,13 +1,18 @@
-// import axios from "axios";
-import axios from "axios";
 import React, { useState } from "react";
+import axios from "axios";
+import { ToastContainer, toast } from "react-toastify";
+import { Modal, Button, Form } from "react-bootstrap";
 
 import "./MemeCard.css";
 
 const MemeCard = ({ id, name, caption, url, memes, setMemes }) => {
-  
-  // const [newCaption, setNewCaption] = useState(caption);
-  // const [newUrl, setNewUrl] = useState(url);
+  const [newCaption, setNewCaption] = useState(caption);
+  const [newUrl, setNewUrl] = useState(url);
+
+  const [show, setShow] = useState(false);
+
+  const handleClose = () => setShow(false);
+  const handleShow = () => setShow(true);
 
   const handleDelete = (id) => {
     axios
@@ -16,29 +21,28 @@ const MemeCard = ({ id, name, caption, url, memes, setMemes }) => {
 
     const newMemes = memes.filter((m) => m.id !== id);
     setMemes(newMemes);
+    toast.success("Deleted Successfully");
   };
 
-  // const handleEdit = (id) => {
-  //   const updateMeme = {
-  //       caption : newCaption,
-  //       url : newUrl
-  //   };
-  //   console.log(updateMeme);
-  //   axios.patch("http://localhost:8081/memes/" + id, updateMeme)
-  //   .catch((err) => console.log(err));
-
-  //   const newMeme = {
-  //     id : id,
-  //     name : name, 
-  //     url : newUrl,
-  //     caption : newCaption
-  //   };
-  //   setMemes([...memes, newMeme]);
-
-  // };
+  const handleEdit = (id) => {
+    
+    axios
+      .patch("http://localhost:8081/memes/" + id, {
+        caption : newCaption,
+        url : newUrl
+      })
+      .then((res) => {
+        if(res.status === 200){
+          toast.success("Edited Successfully");
+        }
+      })
+      .catch((err) => console.log(err));
+    
+  };
 
   return (
     <div>
+      <ToastContainer />
       <div className="card " style={{ width: "15rem", height: "22rem" }}>
         <img
           className="card-img-top"
@@ -54,11 +58,43 @@ const MemeCard = ({ id, name, caption, url, memes, setMemes }) => {
           <button
             type="button"
             className="btn btn-info btn-sm"
-            data-toggle="modal"
-            data-target="#Modal"
+            onClick={handleShow}
           >
             Edit
           </button>
+          <Modal show={show} onHide={handleClose}>
+            <Modal.Header closeButton>
+              <Modal.Title>Edit</Modal.Title>
+            </Modal.Header>
+            <Modal.Body>
+              <Form.Group>
+                <Form.Label>New Caption</Form.Label>
+                <Form.Control
+                  type="text"
+                  value={newCaption}
+                  onChange={(e) => setNewCaption(e.target.value)}
+                  placeholder="New Caption"
+                />
+              </Form.Group>
+              <Form.Group>
+                <Form.Label>New Meme URL</Form.Label>
+                <Form.Control
+                  type="text"
+                  value={newUrl}
+                  onChange={(e) => setNewUrl(e.target.value)}
+                  placeholder="New URL"
+                />
+              </Form.Group>
+            </Modal.Body>
+            <Modal.Footer>
+              <Button variant="secondary" onClick={handleClose}>
+                Close
+              </Button>
+              <Button variant="success" onClick={handleEdit(id)}>
+                Save Changes
+              </Button>
+            </Modal.Footer>
+          </Modal>
           <button
             type="button"
             className="btn btn-danger btn-sm"
@@ -68,72 +104,6 @@ const MemeCard = ({ id, name, caption, url, memes, setMemes }) => {
           </button>
         </div>
       </div>
-      {/* <div
-        className="modal fade"
-        id="Modal"
-        tabIndex={-1}
-        role="dialog"
-        aria-labelledby="exampleModalCenterTitle"
-        aria-hidden="true"
-      >
-        <div className="modal-dialog modal-dialog-centered" role="document">
-          <div className="modal-content">
-            <div className="modal-header">
-              <h5 className="modal-title" id="exampleModalLongTitle">
-                Edit
-              </h5>
-              <button
-                type="button"
-                className="close"
-                data-dismiss="modal"
-                aria-label="Close"
-              >
-                <span aria-hidden="true">×</span>
-              </button>
-            </div>
-            <div className="modal-body">
-              <form>
-                <div class="form-group">
-                  <label for="caption-change" className="col-form-label">
-                    Caption
-                  </label>
-                  <input
-                    type="text"
-                    id="caption-change"
-                    className="form-control"
-                    value={caption}
-                    onChange={(e) => setNewCaption(e.target.value)}
-                  />
-                </div>
-                <div class="form-group">
-                  <label for="url-change" class="col-form-label">
-                    Image URL
-                  </label>
-                  <input
-                    type="text"
-                    id="url-change"
-                    className="form-control"
-                    value={url}
-                    onChange={(e) => setNewUrl(e.target.value)}
-                  />
-                </div>
-              </form>
-            </div>
-            <div className="modal-footer">
-              <button
-                type="button"
-                className="btn btn-secondary"
-                data-dismiss="modal"
-              >
-                Close
-              </button>
-              <button type="button" className="btn btn-primary" onClick={handleEdit(id)}>
-                Save changes
-              </button>
-            </div>
-          </div>
-        </div>
-      </div> */}
     </div>
   );
 };
