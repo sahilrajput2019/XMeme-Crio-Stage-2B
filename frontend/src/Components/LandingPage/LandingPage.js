@@ -1,10 +1,11 @@
+//importing modules
 import React, { useState } from "react";
-
 import InputForm from "./InputForm/Inputform";
 import ShowMemes from "./ShowMemes/ShowMemes";
 import { ThemeProvider, createGlobalStyle } from "styled-components";
 import "./Landing.css";
 
+//for our dark mode
 const GlobalStyle = createGlobalStyle`
   body{
     background-color : ${(props) =>
@@ -13,13 +14,16 @@ const GlobalStyle = createGlobalStyle`
   }
 `;
 
+//Landing Page Component
 const LandingPage = () => {
+  // To get today's date
   const today = new Date();
   const dd = String(today.getDate()).padStart(2, "0");
   const mm = String(today.getMonth() + 1).padStart(2, "0");
   const yyyy = today.getFullYear();
   const date = dd + " - " + mm + " - " + yyyy;
 
+  //State managment for keeping which mode to render
   const [theme, setTheme] = useState({ mode: "light" });
 
   return (
@@ -51,6 +55,7 @@ const LandingPage = () => {
               </span>
             </strong>
           </p>
+          {/* Calling two other main components for form input and showing memes */}
           <InputForm />
           <ShowMemes />
         </div>
