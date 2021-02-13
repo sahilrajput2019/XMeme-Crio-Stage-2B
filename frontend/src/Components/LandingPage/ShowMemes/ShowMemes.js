@@ -2,7 +2,7 @@
 import React, { useState, useEffect } from "react";
 import axios from "axios";
 //importing MemeCard Component
-import MemeCard from "./MemeCard";
+import MemeCard from "./MemeCard/MemeCard";
 
 //CSS File
 import "./ShowMemes.css";
